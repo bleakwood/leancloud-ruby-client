@@ -25,7 +25,14 @@ module AV
     end
 
     def self.link_auth_data(auth_data)
-      AV.client.post(Protocol.user_uri, auth_data.to_json)
+      response = AV.client.post(Protocol.user_uri, auth_data.to_json)
+      AV.client.session_token = response[AV::Protocol::KEY_USER_SESSION_TOKEN]
+
+      new(response)
+    end
+
+    def self.update(user_data, user_id)
+      AV.client.put(Protocol.user_uri(user_id), user_data.to_json)
     end
 
     def initialize(data = nil)
