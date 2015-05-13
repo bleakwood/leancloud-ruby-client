@@ -24,6 +24,10 @@ module AV
       AV.client.post(AV::Protocol::PASSWORD_RESET_URI, body.to_json)
     end
 
+    def self.link_auth_data(auth_data)
+      AV.client.post(Protocol.user_uri, auth_data.to_json)
+    end
+
     def initialize(data = nil)
       data["username"] = data[:username] if data[:username]
       data["password"] = data[:password] if data[:password]
